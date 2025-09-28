@@ -30,7 +30,6 @@ function registrationController(req, res) {
       lastName: lastName,
       email: email,
       password: hash,
-      varified: varified,
       otp: otp,
       otpExpire: otpExpireController()
     });

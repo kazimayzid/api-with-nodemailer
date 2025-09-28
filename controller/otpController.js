@@ -5,22 +5,24 @@ async function otpController(req, res) {
   let existinguser = await userSchema.findOne({ email: email });
   console.log(existinguser);
   if (!existinguser) {
-    return res.status(400).json({success:false, message: "user not Found"})
+    return res.status(400).json({ success: false, message: "user not Found" });
   }
   if (existinguser.otpExpire < Date.now()) {
-     res.status(400).json({success: false, message:"otp is Expired"});
+    res.status(400).json({ success: false, message: "otp is Expired" });
     return;
   }
   if (existinguser.otp !== otp) {
-    res.send("otp is invelid");
+    res.status(400).json({ success: false, message: "otp is invelid" });
     return;
   }
 
   if (existinguser.otp == otp) {
-    res.send("otp matched");
-    existinguser.varified = true
-  } else {
-    res.send("not matched");
+    res.status(200).json({ success: true, message: "otp matched" });
   }
+  const userVerify = await userSchema.findOneAndUpdate(
+    { email },
+    { $set: { varified: true }, $unset: { otp: "", otpExpire: "" } },
+    { new: true }
+  );
 }
 module.exports = otpController;

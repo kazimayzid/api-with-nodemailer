@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 function dbConfig() {
-    mongoose.connect("mongodb+srv://nodemailer:nodemailer@cluster0.tiymfmr.mongodb.net/nodemailer?retryWrites=true&w=majority&appName=Cluster0").then(()=> {
+    mongoose.connect(process.env.DATABASE_URL).then(()=> {
         console.log("db connected");
         
     })
