@@ -28,6 +28,10 @@ const userSchema = new Schema({
   otp: {
     type: String,
   },
+  otpExpire:{
+    type: Date,
+    default: Date.now()
+  }
 });
 
 module.exports = mongoose.model("userList", userSchema)
